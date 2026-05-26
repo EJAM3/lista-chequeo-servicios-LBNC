@@ -356,6 +356,30 @@
     .btn-danger { background: #d94f4f; color: #fff; }
     .btn-danger:hover { background: #b83c3c; }
 
+    /* ── Section milestone rows ── */
+    .section-start td {
+      background: #f0f4ff !important;
+      border-top: 2px solid #c9a84c;
+    }
+    .section-start td.hora { color: #1e3a5f !important; font-size: 0.82rem; }
+    .section-start td.actividad strong { color: #1e3a5f; font-size: 0.85rem; letter-spacing: 0.3px; }
+
+    /* ── Service timeline bar ── */
+    .service-timeline {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+      background: #1e3a5f;
+      border-radius: 8px;
+      padding: 10px 16px;
+      margin-bottom: 18px;
+      font-size: 0.78rem;
+      color: #c9bfa0;
+    }
+    .service-timeline .tl-item { color: #e8d9b0; }
+    .service-timeline .tl-item strong { color: #c9a84c; }
+    .service-timeline .tl-sep { color: #5a7aa0; font-size: 0.9rem; }
     /* ── Print ── */
     @media print {
       body { background: #fff; padding: 0; }
@@ -407,6 +431,7 @@
   <button class="tab-btn active" onclick="openTab(event,'tab1')">⛪ Servicio 7:45 AM</button>
   <button class="tab-btn" onclick="openTab(event,'tab2')">⛪ Servicio 9:45 AM</button>
   <button class="tab-btn" onclick="openTab(event,'tab3')">⛪ Servicio 11:45 AM</button>
+  <button class="tab-btn" onclick="openTab(event,'tab4')">📖 Oración & Estudio</button>
 </div>
 
 <!-- ════════════════════════════════════════════════
@@ -591,6 +616,80 @@
   </div>
 </div>
 
+
+<!-- ════════════════════════════════════════════════
+     PESTAÑA 4 — Servicio de Oración y Estudio Bíblico
+     ════════════════════════════════════════════════ -->
+<div id="tab4" class="tab-panel">
+  <div class="panel-title">📖 Servicio de Oración y Estudio Bíblico Semanal</div>
+
+  <div class="service-timeline">
+    <span class="tl-item">⛪ Apertura <strong>4:00 PM</strong></span>
+    <span class="tl-sep">→</span>
+    <span class="tl-item">🙏 Oración <strong>5:00 PM</strong></span>
+    <span class="tl-sep">→</span>
+    <span class="tl-item">📖 Servicio <strong>5:30 PM</strong></span>
+    <span class="tl-sep">→</span>
+    <span class="tl-item">🔒 Cierre <strong>7:00 PM</strong></span>
+  </div>
+
+  <div class="progress-wrap">
+    <div class="progress-label">
+      <span>Avance del chequeo</span>
+      <span id="pct4">0 / 0 completadas</span>
+    </div>
+    <div class="progress-bar-bg"><div class="progress-bar-fill" id="bar4"></div></div>
+  </div>
+
+  <table class="checklist-table" id="tbl4">
+    <thead>
+      <tr>
+        <th style="width:90px">Hora</th>
+        <th>Actividad</th>
+        <th class="center" style="width:48px">C</th>
+        <th class="center" style="width:48px">NC</th>
+        <th style="width:130px">Responsable</th>
+        <th style="width:180px">Observación</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="section-start"><td class="hora">4:00 p.m.</td><td class="actividad"><strong>APERTURA DE PUERTAS DEL SALÓN PRINCIPAL</strong></td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-c" /></div></td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-nc" /></div></td><td><input class="field-input" type="text" placeholder="Responsable" /></td><td><input class="field-input" type="text" placeholder="" /></td></tr>
+      <tr><td class="hora"></td><td class="actividad">Encender equipos de aire acondicionado</td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-c" /></div></td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-nc" /></div></td><td><input class="field-input" type="text" placeholder="Responsable" /></td><td><input class="field-input" type="text" placeholder="" /></td></tr>
+      <tr><td class="hora"></td><td class="actividad">Verificar que las sillas estén arregladas</td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-c" /></div></td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-nc" /></div></td><td><input class="field-input" type="text" placeholder="Responsable" /></td><td><input class="field-input" type="text" placeholder="" /></td></tr>
+      <tr><td class="hora"></td><td class="actividad">Llegada del equipo y servidores de turno</td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-c" /></div></td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-nc" /></div></td><td><input class="field-input" type="text" placeholder="Responsable" /></td><td><input class="field-input" type="text" placeholder="" /></td></tr>
+      <tr><td class="hora">4:35 p.m.</td><td class="actividad">Verificar ambientación (luces, decoración) y limpieza</td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-c" /></div></td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-nc" /></div></td><td><input class="field-input" type="text" placeholder="Responsable" /></td><td><input class="field-input" type="text" placeholder="" /></td></tr>
+      <tr><td class="hora"></td><td class="actividad">Verificar llegada de sonidista y encargado de multimedia</td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-c" /></div></td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-nc" /></div></td><td><input class="field-input" type="text" placeholder="Responsable" /></td><td><input class="field-input" type="text" placeholder="" /></td></tr>
+      <tr><td class="hora"></td><td class="actividad">El Director de alabanza, músicos y coro deben estar presentes</td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-c" /></div></td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-nc" /></div></td><td><input class="field-input" type="text" placeholder="Responsable" /></td><td><input class="field-input" type="text" placeholder="" /></td></tr>
+      <tr><td class="hora"></td><td class="actividad">Revisar parrilla de anuncios, letras de canciones</td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-c" /></div></td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-nc" /></div></td><td><input class="field-input" type="text" placeholder="Responsable" /></td><td><input class="field-input" type="text" placeholder="" /></td></tr>
+      <tr><td class="hora">4:45 p.m.</td><td class="actividad">Confirmar llegada del pastor de guardia</td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-c" /></div></td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-nc" /></div></td><td><input class="field-input" type="text" placeholder="Responsable" /></td><td><input class="field-input" type="text" placeholder="Debe estar antes de la oración" /></td></tr>
+      <tr><td class="hora"></td><td class="actividad">Verificar llegada de los servidores generales</td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-c" /></div></td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-nc" /></div></td><td><input class="field-input" type="text" placeholder="Responsable" /></td><td><input class="field-input" type="text" placeholder="" /></td></tr>
+      <tr><td class="hora"></td><td class="actividad">Verificar alguna actividad extra a incluir en el programa</td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-c" /></div></td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-nc" /></div></td><td><input class="field-input" type="text" placeholder="Responsable" /></td><td><input class="field-input" type="text" placeholder="Entrega de certificados, testimonios, etc." /></td></tr>
+      <tr><td class="hora">4:55 p.m.</td><td class="actividad">Colocar el video contador-anuncios</td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-c" /></div></td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-nc" /></div></td><td><input class="field-input" type="text" placeholder="Responsable" /></td><td><input class="field-input" type="text" placeholder="" /></td></tr>
+      <tr><td class="hora">4:58 p.m.</td><td class="actividad">Verificar entrega de hojitas con peticiones de oración</td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-c" /></div></td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-nc" /></div></td><td><input class="field-input" type="text" placeholder="Responsable" /></td><td><input class="field-input" type="text" placeholder="" /></td></tr>
+      <!-- HITO: Oración -->
+      <tr class="section-start"><td class="hora">5:00 p.m.</td><td class="actividad"><strong>INICIO DEL SERVICIO DE ORACIÓN</strong></td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-c" /></div></td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-nc" /></div></td><td><input class="field-input" type="text" placeholder="Responsable" /></td><td><input class="field-input" type="text" placeholder="" /></td></tr>
+      <tr><td class="hora"></td><td class="actividad">Monitorear el tiempo de oración y enfoque de las peticiones</td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-c" /></div></td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-nc" /></div></td><td><input class="field-input" type="text" placeholder="Responsable" /></td><td><input class="field-input" type="text" placeholder="" /></td></tr>
+      <tr><td class="hora">5:25 p.m.</td><td class="actividad">Músicos, director y coro en el escenario en sus posiciones</td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-c" /></div></td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-nc" /></div></td><td><input class="field-input" type="text" placeholder="Responsable" /></td><td><input class="field-input" type="text" placeholder="Transición al servicio principal" /></td></tr>
+      <tr><td class="hora"></td><td class="actividad">Verificar llegada del predicador y revisar bosquejo a proyectar</td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-c" /></div></td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-nc" /></div></td><td><input class="field-input" type="text" placeholder="Responsable" /></td><td><input class="field-input" type="text" placeholder="" /></td></tr>
+      <tr><td class="hora">5:28 p.m.</td><td class="actividad">Confirmar llegada del predicador</td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-c" /></div></td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-nc" /></div></td><td><input class="field-input" type="text" placeholder="Responsable" /></td><td><input class="field-input" type="text" placeholder="" /></td></tr>
+      <tr><td class="hora"></td><td class="actividad">Verificar bosquejo del predicador y recursos a proyectar</td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-c" /></div></td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-nc" /></div></td><td><input class="field-input" type="text" placeholder="Responsable" /></td><td><input class="field-input" type="text" placeholder="Revisar recursos en pantallas" /></td></tr>
+      <!-- HITO: Servicio Principal -->
+      <tr class="section-start"><td class="hora">5:30 p.m.</td><td class="actividad"><strong>INICIO DEL SERVICIO DE ADORACIÓN, PREDICACIÓN Y LLAMADO</strong></td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-c" /></div></td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-nc" /></div></td><td><input class="field-input" type="text" placeholder="Responsable" /></td><td><input class="field-input" type="text" placeholder="" /></td></tr>
+      <tr><td class="hora"></td><td class="actividad">Una vez iniciado el servicio, ver que todo transcurra según lo programado</td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-c" /></div></td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-nc" /></div></td><td><input class="field-input" type="text" placeholder="Responsable" /></td><td><input class="field-input" type="text" placeholder="Monitorear según lo programado" /></td></tr>
+      <!-- HITO: Cierre -->
+      <tr class="section-start"><td class="hora">7:00 p.m.</td><td class="actividad"><strong>CIERRE DEL SERVICIO</strong></td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-c" /></div></td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-nc" /></div></td><td><input class="field-input" type="text" placeholder="Responsable" /></td><td><input class="field-input" type="text" placeholder="Finalización del tiempo con Adoración" /></td></tr>
+      <tr><td class="hora"></td><td class="actividad">Apagar equipos de sonido, multimedia y luces del escenario</td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-c" /></div></td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-nc" /></div></td><td><input class="field-input" type="text" placeholder="Responsable" /></td><td><input class="field-input" type="text" placeholder="" /></td></tr>
+      <tr><td class="hora"></td><td class="actividad">Apagar equipos de aire acondicionado</td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-c" /></div></td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-nc" /></div></td><td><input class="field-input" type="text" placeholder="Responsable" /></td><td><input class="field-input" type="text" placeholder="" /></td></tr>
+      <tr class="section-start"><td class="hora">7:30 p.m.</td><td class="actividad"><strong>CIERRE DE PUERTAS DEL SALÓN PRINCIPAL</strong></td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-c" /></div></td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-nc" /></div></td><td><input class="field-input" type="text" placeholder="Responsable" /></td><td><input class="field-input" type="text" placeholder="Asegurar las instalaciones" /></td></tr>
+    </tbody>
+  </table>
+
+  <div class="actions">
+    <button class="btn btn-primary" onclick="marcarTodos('tbl4', true)">✅ Marcar todos C</button>
+    <button class="btn btn-outline" onclick="imprimirTab('tab4')">🖨️ Imprimir esta pestaña</button>
+    <button class="btn btn-danger" onclick="limpiarTab('tbl4')">🗑️ Limpiar</button>
+  </div>
+</div>
 <script>
   // ── Tab switching ──
   function openTab(evt, tabId) {
@@ -684,6 +783,7 @@
   bindTable('tbl1', 'bar1', 'pct1');
   bindTable('tbl2', 'bar2', 'pct2');
   bindTable('tbl3', 'bar3', 'pct3');
+  bindTable('tbl4', 'bar4', 'pct4');
 </script>
 
 </div><!-- /.content-wrap -->
