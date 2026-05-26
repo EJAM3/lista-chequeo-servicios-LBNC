@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lista de Chequeo — ADORAR 2026 | Las Buenas Nuevas de Cabudare</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+      background: #eef1f6;
+      color: #1a1a2e;
+      min-height: 100vh;
+      padding: 0 0 32px;
+    }
+
+    /* ── Banner header ── */
+    .site-header {
+      position: relative;
+      width: 100%;
+      overflow: hidden;
+      box-shadow: 0 6px 32px #0004;
+    }
+
+    .site-header img.banner {
+      display: block;
+      width: 100%;
+      max-height: 220px;
+      object-fit: cover;
+      object-position: center;
+    }
+
+    .site-header .header-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, rgba(14,28,54,0.55) 0%, transparent 60%);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 0 40px;
+    }
+
+    .site-header .church-name {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 1.55rem;
+      font-weight: 600;
+      color: #e8d9b0;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      text-shadow: 0 2px 12px #00000080;
+      line-height: 1.2;
+    }
+
+    .site-header .church-sub {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 500;
+      color: #c9bfa0;
+      letter-spacing: 3.5px;
+      text-transform: uppercase;
+      margin-top: 4px;
+      text-shadow: 0 1px 8px #00000060;
+    }
+
+    /* ── Title bar below banner ── */
+    .title-bar {
+      background: #1e3a5f;
+      padding: 12px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
+      border-bottom: 3px solid #c9a84c;
+    }
+
+    .title-bar h1 {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: #e8d9b0;
+      letter-spacing: 1px;
+    }
+
+    .title-bar .doc-badge {
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: #1e3a5f;
+      background: #c9a84c;
+      padding: 4px 12px;
+      border-radius: 100px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    /* ── Content wrapper ── */
+    .content-wrap {
+      padding: 24px 24px 0;
+      max-width: 1300px;
+      margin: 0 auto;
+    }
+
+    /* ── Fecha / Responsable global ── */
+    .meta-bar {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-bottom: 24px;
+    }
+
+    .meta-bar label {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #444;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .meta-bar input {
+      border: 1px solid #ccd;
+      border-radius: 6px;
+      padding: 5px 10px;
+      font-size: 0.85rem;
+      color: #1a1a2e;
+      background: #fff;
+      outline: none;
+    }
+
+    .meta-bar input:focus { border-color: #3a7bd5; box-shadow: 0 0 0 2px #3a7bd520; }
+
+    /* ── Tabs ── */
+    .tabs {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 0;
+      flex-wrap: wrap;
+    }
+
+    .tab-btn {
+      padding: 10px 22px;
+      border: none;
+      border-radius: 10px 10px 0 0;
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
+      background: #d4dae8;
+      color: #4a5a72;
+      transition: background 0.2s, color 0.2s, transform 0.1s;
+      position: relative;
+      bottom: -2px;
+      font-family: 'Inter', sans-serif;
+      letter-spacing: 0.3px;
+    }
+
+    .tab-btn:hover { background: #bfc9de; color: #1e3a5f; }
+
+    .tab-btn.active {
+      background: #1e3a5f;
+      color: #e8d9b0;
+      box-shadow: 0 -3px 10px #1e3a5f40;
+      border-top: 2px solid #c9a84c;
+    }
+
+    /* ── Panel ── */
+    .tab-panel {
+      display: none;
+      background: #fff;
+      border-radius: 0 12px 12px 12px;
+      box-shadow: 0 4px 20px #0001;
+      padding: 24px;
+      animation: fadeIn 0.2s ease;
+    }
+
+    .tab-panel.active { display: block; }
+
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+
+    .panel-title {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: #1e3a5f;
+      margin-bottom: 18px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #c9a84c;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      letter-spacing: 0.5px;
+    }
+
+    /* ── Table ── */
+    .checklist-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.84rem;
+    }
+
+    .checklist-table thead tr {
+      background: #1e3a5f;
+      color: #e8d9b0;
+    }
+
+    .checklist-table thead th {
+      padding: 10px 12px;
+      text-align: left;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      font-size: 0.78rem;
+      text-transform: uppercase;
+    }
+
+    .checklist-table thead th.center { text-align: center; }
+
+    .checklist-table tbody tr { border-bottom: 1px solid #eaeff7; }
+
+    .checklist-table tbody tr:nth-child(even) { background: #f7f9fd; }
+
+    .checklist-table tbody tr:hover { background: #eef3fc; }
+
+    .checklist-table td {
+      padding: 9px 12px;
+      vertical-align: middle;
+    }
+
+    .checklist-table td.hora {
+      white-space: nowrap;
+      font-weight: 700;
+      color: #c9a84c;
+      font-size: 0.8rem;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .checklist-table td.center { text-align: center; }
+
+    /* ── Block header (BLOQUE DE CIERRE) ── */
+    .block-header td {
+      background: #1e3a5f !important;
+      font-weight: 700;
+      color: #c9a84c;
+      font-size: 0.78rem;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      padding: 9px 12px !important;
+    }
+
+    /* ── Checkboxes ── */
+    .check-wrap {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .check-c, .check-nc {
+      width: 20px;
+      height: 20px;
+      cursor: pointer;
+      accent-color: #1e3a5f;
+      border-radius: 4px;
+    }
+
+    .check-nc { accent-color: #d94f4f; }
+
+    /* Row highlight on check */
+    tr.done { background: #eafaf1 !important; }
+    tr.done .actividad { color: #27ae60; }
+    tr.done .actividad::after { content: ' ✓'; color: #27ae60; font-size: 0.75rem; }
+
+    tr.no-done { background: #fdf3f3 !important; }
+
+    /* ── Responsable / Observación inputs ── */
+    .field-input {
+      border: 1px solid #dde3f0;
+      border-radius: 5px;
+      padding: 4px 8px;
+      font-size: 0.8rem;
+      width: 100%;
+      min-width: 90px;
+      color: #333;
+      background: transparent;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .field-input:focus { border-color: #3a7bd5; background: #fff; }
+
+    /* ── Observación hint ── */
+    .obs-hint {
+      font-size: 0.75rem;
+      color: #888;
+      font-style: italic;
+    }
+
+    /* ── Progress bar ── */
+    .progress-wrap {
+      margin-bottom: 16px;
+    }
+
+    .progress-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.78rem;
+      color: #666;
+      margin-bottom: 5px;
+    }
+
+    .progress-bar-bg {
+      background: #e0e7f0;
+      border-radius: 100px;
+      height: 8px;
+      overflow: hidden;
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #c9a84c, #e8d9b0, #c9a84c);
+      border-radius: 100px;
+      transition: width 0.4s ease;
+      width: 0%;
+    }
+
+    /* ── Actions ── */
+    .actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 20px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      padding: 9px 20px;
+      border: none;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.1s;
+    }
+
+    .btn:active { transform: scale(0.97); }
+
+    .btn-primary { background: #1e3a5f; color: #e8d9b0; border: 1px solid #c9a84c; }
+    .btn-primary:hover { background: #2a4f80; }
+
+    .btn-outline {
+      background: transparent;
+      color: #1e3a5f;
+      border: 2px solid #1e3a5f;
+    }
+    .btn-outline:hover { background: #e8edf5; }
+
+    .btn-danger { background: #d94f4f; color: #fff; }
+    .btn-danger:hover { background: #b83c3c; }
+
+    /* ── Print ── */
+    @media print {
+      body { background: #fff; padding: 0; }
+      .tabs, .actions, .meta-bar, .btn, .progress-wrap { display: none !important; }
+      .site-header { max-height: 120px; }
+      .site-header img.banner { max-height: 120px; }
+      .title-bar { padding: 8px 24px; }
+      .content-wrap { padding: 12px; }
+      .tab-panel { display: block !important; box-shadow: none; padding: 8px; margin-bottom: 32px; }
+      .tab-panel.active { display: block; }
+      .field-input { border: none; border-bottom: 1px solid #999; border-radius: 0; }
+      .checklist-table thead tr { background: #1e3a5f !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      .block-header td { background: #1e3a5f !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    }
+
+    @media (max-width: 700px) {
+      .checklist-table { font-size: 0.78rem; }
+      .checklist-table td, .checklist-table th { padding: 7px 6px; }
+      .tab-btn { padding: 8px 14px; font-size: 0.82rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Banner ── -->
+<header class="site-header">
+  <img class="banner" src="header-adorar.png" alt="ADORAR 2026 — Las Buenas Nuevas de Cabudare" />
+  <div class="header-overlay">
+    <span class="church-name">Las Buenas Nuevas de Cabudare</span>
+    <span class="church-sub">Control Operativo de Servicios</span>
+  </div>
+</header>
+
+<!-- ── Title bar ── -->
+<div class="title-bar">
+  <h1>Lista de Chequeo — Cultos Dominicales</h1>
+  <span class="doc-badge">ADORAR 2026</span>
+</div>
+
+<!-- ── Content ── -->
+<div class="content-wrap">
+
+<div class="meta-bar">
+  <label>📅 Fecha: <input type="date" id="fecha-global" /></label>
+  <label>👤 Coordinador: <input type="text" id="coord-global" placeholder="Nombre del coordinador" style="width:200px" /></label>
+</div>
+
+<div class="tabs">
+  <button class="tab-btn active" onclick="openTab(event,'tab1')">⛪ Servicio 8:00 AM</button>
+  <button class="tab-btn" onclick="openTab(event,'tab2')">⛪ Servicio 10:00 AM</button>
+  <button class="tab-btn" onclick="openTab(event,'tab3')">⛪ Servicio 12:00 PM</button>
+</div>
+
+<!-- ════════════════════════════════════════════════
+     PESTAÑA 1 — Servicio 8:00 AM
+     ════════════════════════════════════════════════ -->
+<div id="tab1" class="tab-panel active">
+  <div class="panel-title">📑 Servicio 8:00 AM</div>
+
+  <div class="progress-wrap">
+    <div class="progress-label">
+      <span>Avance del chequeo</span>
+      <span id="pct1">0 / 0 completadas</span>
+    </div>
+    <div class="progress-bar-bg"><div class="progress-bar-fill" id="bar1"></div></div>
+  </div>
+
+  <table class="checklist-table" id="tbl1">
+    <thead>
+      <tr>
+        <th style="width:90px">Hora</th>
+        <th>Actividad</th>
+        <th class="center" style="width:48px">C</th>
+        <th class="center" style="width:48px">NC</th>
+        <th style="width:130px">Responsable</th>
+        <th style="width:180px">Observación</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td class="hora">7:30 a.m.</td><td class="actividad">Abrir la puerta del salón principal.</td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-c" /></div></td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-nc" /></div></td><td><input class="field-input" type="text" placeholder="Responsable" /></td><td><input class="field-input" type="text" placeholder="" /></td></tr>
+      <tr><td class="hora">7:35 a.m.</td><td class="actividad">Encender los equipos de aire acondicionado.</td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-c" /></div></td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-nc" /></div></td><td><input class="field-input" type="text" placeholder="Responsable" /></td><td><input class="field-input" type="text" placeholder="" /></td></tr>
+      <tr><td class="hora">7:35 a.m.</td><td class="actividad">Verificar que las sillas estén ordenadas.</td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-c" /></div></td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-nc" /></div></td><td><input class="field-input" type="text" placeholder="Responsable" /></td><td><input class="field-input" type="text" placeholder="" /></td></tr>
+      <tr><td class="hora">7:40 a.m.</td><td class="actividad">Verificar ambientación (luces, decoración) y limpieza.</td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-c" /></div></td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-nc" /></div></td><td><input class="field-input" type="text" placeholder="Responsable" /></td><td><input class="field-input" type="text" placeholder="" /></td></tr>
+      <tr><td class="hora">7:40 a.m.</td><td class="actividad">Verificar llegada de sonidista y encargado de multimedia.</td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-c" /></div></td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-nc" /></div></td><td><input class="field-input" type="text" placeholder="Responsable" /></td><td><input class="field-input" type="text" placeholder="" /></td></tr>
+      <tr><td class="hora">7:40 a.m.</td><td class="actividad">Encender las pantallas.</td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-c" /></div></td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-nc" /></div></td><td><input class="field-input" type="text" placeholder="Responsable" /></td><td><input class="field-input" type="text" placeholder="" /></td></tr>
+      <tr><td class="hora">7:45 a.m.</td><td class="actividad">Colocar ambiente musical.</td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-c" /></div></td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-nc" /></div></td><td><input class="field-input" type="text" placeholder="Responsable" /></td><td><input class="field-input" type="text" placeholder="" /></td></tr>
+      <tr><td class="hora">7:45 a.m.</td><td class="actividad">Director de alabanza, músicos y coro presentes.</td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-c" /></div></td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-nc" /></div></td><td><input class="field-input" type="text" placeholder="Responsable" /></td><td><input class="field-input" type="text" placeholder="" /></td></tr>
+      <tr><td class="hora">7:50 a.m.</td><td class="actividad">Revisar parrilla de anuncios y letras de canciones.</td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-c" /></div></td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-nc" /></div></td><td><input class="field-input" type="text" placeholder="Responsable" /></td><td><input class="field-input" type="text" placeholder="" /></td></tr>
+      <tr><td class="hora">7:50 a.m.</td><td class="actividad">Verificar llegada de los servidores / ujieres.</td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-c" /></div></td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-nc" /></div></td><td><input class="field-input" type="text" placeholder="Responsable" /></td><td><input class="field-input" type="text" placeholder="" /></td></tr>
+      <tr><td class="hora">7:50 a.m.</td><td class="actividad">Verificar alguna actividad extra a incluir en el programa.</td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-c" /></div></td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-nc" /></div></td><td><input class="field-input" type="text" placeholder="Responsable" /></td><td><input class="field-input" type="text" placeholder="" /></td></tr>
+      <tr><td class="hora">7:50 a.m.</td><td class="actividad">Colocar 5 minutos el video contador-anuncios.</td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-c" /></div></td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-nc" /></div></td><td><input class="field-input" type="text" placeholder="Responsable" /></td><td><input class="field-input" type="text" placeholder="" /></td></tr>
+      <tr><td class="hora">7:55 a.m.</td><td class="actividad">Alabanza en el escenario (2 min antes del inicio).</td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-c" /></div></td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-nc" /></div></td><td><input class="field-input" type="text" placeholder="Responsable" /></td><td><input class="field-input" type="text" placeholder="" /></td></tr>
+      <tr><td class="hora">7:58 a.m.</td><td class="actividad">Confirmar pastor de guardia y llegada del predicador.</td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-c" /></div></td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-nc" /></div></td><td><input class="field-input" type="text" placeholder="Responsable" /></td><td><input class="field-input" type="text" placeholder="" /></td></tr>
+      <tr><td class="hora">7:58 a.m.</td><td class="actividad">Verificar llegada del predicador y revisar bosquejo.</td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-c" /></div></td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-nc" /></div></td><td><input class="field-input" type="text" placeholder="Responsable" /></td><td><input class="field-input" type="text" placeholder="Recursos multimedia." /></td></tr>
+      <tr><td class="hora">7:58 a.m.</td><td class="actividad">Verificar las llaves de la oficina para conteo de ofrendas.</td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-c" /></div></td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-nc" /></div></td><td><input class="field-input" type="text" placeholder="Responsable" /></td><td><input class="field-input" type="text" placeholder="" /></td></tr>
+      <tr><td class="hora">7:58 a.m.</td><td class="actividad">Verificar entrega de las hojas de peticiones de oración.</td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-c" /></div></td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-nc" /></div></td><td><input class="field-input" type="text" placeholder="Responsable" /></td><td><input class="field-input" type="text" placeholder="" /></td></tr>
+      <tr><td class="hora">8:00 a.m.</td><td class="actividad"><strong>Inicio del Servicio</strong></td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-c" /></div></td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-nc" /></div></td><td><input class="field-input" type="text" placeholder="Responsable" /></td><td><input class="field-input" type="text" placeholder="" /></td></tr>
+      <tr><td class="hora">Durante</td><td class="actividad">Monitorear que el programa transcurra según lo planeado.</td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-c" /></div></td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-nc" /></div></td><td><input class="field-input" type="text" placeholder="Responsable" /></td><td><input class="field-input" type="text" placeholder="" /></td></tr>
+      <!-- Bloque Cierre -->
+      <tr class="block-header"><td colspan="6">🔒 BLOQUE DE CIERRE DEL SERVICIO</td></tr>
+      <tr><td class="hora">9:30 a.m.</td><td class="actividad">Recolectar sobres de diezmos, ofrendas y peticiones.</td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-c" /></div></td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-nc" /></div></td><td><input class="field-input" type="text" placeholder="Responsable" /></td><td><input class="field-input" type="text" placeholder="Trasladar a oficina de conteo." /></td></tr>
+      <tr><td class="hora">9:35 a.m.</td><td class="actividad">Realizar conteo físico de asistencia (Hombres/Mujeres/Niños).</td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-c" /></div></td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-nc" /></div></td><td><input class="field-input" type="text" placeholder="Responsable" /></td><td><input class="field-input" type="text" placeholder="Registrar en bitácora." /></td></tr>
+      <tr><td class="hora">9:35 a.m.</td><td class="actividad">Despejar pasillos y ordenar sillas para el próximo culto.</td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-c" /></div></td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-nc" /></div></td><td><input class="field-input" type="text" placeholder="Responsable" /></td><td><input class="field-input" type="text" placeholder="" /></td></tr>
+      <tr><td class="hora">9:40 a.m.</td><td class="actividad">Entrega de guardia al equipo del servicio de las 10:00 AM.</td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-c" /></div></td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-nc" /></div></td><td><input class="field-input" type="text" placeholder="Responsable" /></td><td><input class="field-input" type="text" placeholder="Reportar novedades." /></td></tr>
+    </tbody>
+  </table>
+
+  <div class="actions">
+    <button class="btn btn-primary" onclick="marcarTodos('tbl1', true)">✅ Marcar todos C</button>
+    <button class="btn btn-outline" onclick="imprimirTab('tab1')">🖨️ Imprimir esta pestaña</button>
+    <button class="btn btn-danger" onclick="limpiarTab('tbl1')">🗑️ Limpiar</button>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════
+     PESTAÑA 2 — Servicio 10:00 AM
+     ════════════════════════════════════════════════ -->
+<div id="tab2" class="tab-panel">
+  <div class="panel-title">📑 Servicio 10:00 AM</div>
+
+  <div class="progress-wrap">
+    <div class="progress-label">
+      <span>Avance del chequeo</span>
+      <span id="pct2">0 / 0 completadas</span>
+    </div>
+    <div class="progress-bar-bg"><div class="progress-bar-fill" id="bar2"></div></div>
+  </div>
+
+  <table class="checklist-table" id="tbl2">
+    <thead>
+      <tr>
+        <th style="width:90px">Hora</th>
+        <th>Actividad</th>
+        <th class="center" style="width:48px">C</th>
+        <th class="center" style="width:48px">NC</th>
+        <th style="width:130px">Responsable</th>
+        <th style="width:180px">Observación</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td class="hora">9:30 a.m.</td><td class="actividad">Abrir puertas del salón y verificar orden post-servicio.</td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-c" /></div></td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-nc" /></div></td><td><input class="field-input" type="text" placeholder="Responsable" /></td><td><input class="field-input" type="text" placeholder="" /></td></tr>
+      <tr><td class="hora">9:35 a.m.</td><td class="actividad">Verificar que los equipos de aire acondicionado sigan óptimos.</td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-c" /></div></td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-nc" /></div></td><td><input class="field-input" type="text" placeholder="Responsable" /></td><td><input class="field-input" type="text" placeholder="" /></td></tr>
+      <tr><td class="hora">9:35 a.m.</td><td class="actividad">Revisar acomodo de sillas rápidas para nuevo flujo.</td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-c" /></div></td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-nc" /></div></td><td><input class="field-input" type="text" placeholder="Responsable" /></td><td><input class="field-input" type="text" placeholder="" /></td></tr>
+      <tr><td class="hora">9:40 a.m.</td><td class="actividad">Verificar relevo o continuidad de sonidista y multimedia.</td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-c" /></div></td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-nc" /></div></td><td><input class="field-input" type="text" placeholder="Responsable" /></td><td><input class="field-input" type="text" placeholder="" /></td></tr>
+      <tr><td class="hora">9:40 a.m.</td><td class="actividad">Verificar pantallas con material del segundo turno.</td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-c" /></div></td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-nc" /></div></td><td><input class="field-input" type="text" placeholder="Responsable" /></td><td><input class="field-input" type="text" placeholder="" /></td></tr>
+      <tr><td class="hora">9:45 a.m.</td><td class="actividad">Colocar ambiente musical de transición.</td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-c" /></div></td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-nc" /></div></td><td><input class="field-input" type="text" placeholder="Responsable" /></td><td><input class="field-input" type="text" placeholder="" /></td></tr>
+      <tr><td class="hora">9:45 a.m.</td><td class="actividad">Director de alabanza, músicos y coro de las 10AM presentes.</td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-c" /></div></td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-nc" /></div></td><td><input class="field-input" type="text" placeholder="Responsable" /></td><td><input class="field-input" type="text" placeholder="" /></td></tr>
+      <tr><td class="hora">9:50 a.m.</td><td class="actividad">Revisar parrilla de anuncios específica de este servicio.</td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-c" /></div></td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-nc" /></div></td><td><input class="field-input" type="text" placeholder="Responsable" /></td><td><input class="field-input" type="text" placeholder="" /></td></tr>
+      <tr><td class="hora">9:50 a.m.</td><td class="actividad">Verificar llegada de los servidores del 2do turno.</td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-c" /></div></td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-nc" /></div></td><td><input class="field-input" type="text" placeholder="Responsable" /></td><td><input class="field-input" type="text" placeholder="" /></td></tr>
+      <tr><td class="hora">9:50 a.m.</td><td class="actividad">Verificar actividades extras específicas para este horario.</td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-c" /></div></td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-nc" /></div></td><td><input class="field-input" type="text" placeholder="Responsable" /></td><td><input class="field-input" type="text" placeholder="" /></td></tr>
+      <tr><td class="hora">9:50 a.m.</td><td class="actividad">Colocar 5 minutos el video contador-anuncios.</td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-c" /></div></td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-nc" /></div></td><td><input class="field-input" type="text" placeholder="Responsable" /></td><td><input class="field-input" type="text" placeholder="" /></td></tr>
+      <tr><td class="hora">9:55 a.m.</td><td class="actividad">Alabanza del 2do turno en posiciones en el escenario.</td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-c" /></div></td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-nc" /></div></td><td><input class="field-input" type="text" placeholder="Responsable" /></td><td><input class="field-input" type="text" placeholder="" /></td></tr>
+      <tr><td class="hora">9:58 a.m.</td><td class="actividad">Confirmar pastor de guardia de las 10AM y predicador.</td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-c" /></div></td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-nc" /></div></td><td><input class="field-input" type="text" placeholder="Responsable" /></td><td><input class="field-input" type="text" placeholder="" /></td></tr>
+      <tr><td class="hora">9:58 a.m.</td><td class="actividad">Verificar bosquejo o recursos del predicador en pantallas.</td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-c" /></div></td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-nc" /></div></td><td><input class="field-input" type="text" placeholder="Responsable" /></td><td><input class="field-input" type="text" placeholder="" /></td></tr>
+      <tr><td class="hora">9:58 a.m.</td><td class="actividad">Custodiar llaves de la oficina para el conteo de ofrendas.</td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-c" /></div></td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-nc" /></div></td><td><input class="field-input" type="text" placeholder="Responsable" /></td><td><input class="field-input" type="text" placeholder="" /></td></tr>
+      <tr><td class="hora">9:58 a.m.</td><td class="actividad">Verificar entrega de hojas de peticiones de oración nuevas.</td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-c" /></div></td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-nc" /></div></td><td><input class="field-input" type="text" placeholder="Responsable" /></td><td><input class="field-input" type="text" placeholder="" /></td></tr>
+      <tr><td class="hora">10:00 a.m.</td><td class="actividad"><strong>Inicio del Servicio</strong></td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-c" /></div></td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-nc" /></div></td><td><input class="field-input" type="text" placeholder="Responsable" /></td><td><input class="field-input" type="text" placeholder="" /></td></tr>
+      <tr><td class="hora">Durante</td><td class="actividad">Monitorear que el programa transcurra según lo planeado.</td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-c" /></div></td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-nc" /></div></td><td><input class="field-input" type="text" placeholder="Responsable" /></td><td><input class="field-input" type="text" placeholder="" /></td></tr>
+      <!-- Bloque Cierre -->
+      <tr class="block-header"><td colspan="6">🔒 BLOQUE DE CIERRE DEL SERVICIO</td></tr>
+      <tr><td class="hora">11:30 a.m.</td><td class="actividad">Recolectar sobres de diezmos, ofrendas y peticiones.</td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-c" /></div></td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-nc" /></div></td><td><input class="field-input" type="text" placeholder="Responsable" /></td><td><input class="field-input" type="text" placeholder="Trasladar a oficina de conteo." /></td></tr>
+      <tr><td class="hora">11:35 a.m.</td><td class="actividad">Realizar conteo físico de asistencia (Hombres/Mujeres/Niños).</td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-c" /></div></td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-nc" /></div></td><td><input class="field-input" type="text" placeholder="Responsable" /></td><td><input class="field-input" type="text" placeholder="Registrar en bitácora." /></td></tr>
+      <tr><td class="hora">11:35 a.m.</td><td class="actividad">Despejar pasillos y ordenar sillas para el próximo culto.</td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-c" /></div></td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-nc" /></div></td><td><input class="field-input" type="text" placeholder="Responsable" /></td><td><input class="field-input" type="text" placeholder="" /></td></tr>
+      <tr><td class="hora">11:40 a.m.</td><td class="actividad">Entrega de guardia al equipo del servicio de las 12:00 PM.</td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-c" /></div></td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-nc" /></div></td><td><input class="field-input" type="text" placeholder="Responsable" /></td><td><input class="field-input" type="text" placeholder="Reportar novedades." /></td></tr>
+    </tbody>
+  </table>
+
+  <div class="actions">
+    <button class="btn btn-primary" onclick="marcarTodos('tbl2', true)">✅ Marcar todos C</button>
+    <button class="btn btn-outline" onclick="imprimirTab('tab2')">🖨️ Imprimir esta pestaña</button>
+    <button class="btn btn-danger" onclick="limpiarTab('tbl2')">🗑️ Limpiar</button>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════
+     PESTAÑA 3 — Servicio 12:00 PM
+     ════════════════════════════════════════════════ -->
+<div id="tab3" class="tab-panel">
+  <div class="panel-title">📑 Servicio 12:00 PM</div>
+
+  <div class="progress-wrap">
+    <div class="progress-label">
+      <span>Avance del chequeo</span>
+      <span id="pct3">0 / 0 completadas</span>
+    </div>
+    <div class="progress-bar-bg"><div class="progress-bar-fill" id="bar3"></div></div>
+  </div>
+
+  <table class="checklist-table" id="tbl3">
+    <thead>
+      <tr>
+        <th style="width:90px">Hora</th>
+        <th>Actividad</th>
+        <th class="center" style="width:48px">C</th>
+        <th class="center" style="width:48px">NC</th>
+        <th style="width:130px">Responsable</th>
+        <th style="width:180px">Observación</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td class="hora">11:30 a.m.</td><td class="actividad">Verificar orden general del salón y retiro de basura rápida.</td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-c" /></div></td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-nc" /></div></td><td><input class="field-input" type="text" placeholder="Responsable" /></td><td><input class="field-input" type="text" placeholder="" /></td></tr>
+      <tr><td class="hora">11:35 a.m.</td><td class="actividad">Ajustar temperatura de aires acondicionados si es necesario.</td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-c" /></div></td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-nc" /></div></td><td><input class="field-input" type="text" placeholder="Responsable" /></td><td><input class="field-input" type="text" placeholder="" /></td></tr>
+      <tr><td class="hora">11:35 a.m.</td><td class="actividad">Revisar alineación final de las líneas de sillas.</td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-c" /></div></td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-nc" /></div></td><td><input class="field-input" type="text" placeholder="Responsable" /></td><td><input class="field-input" type="text" placeholder="" /></td></tr>
+      <tr><td class="hora">11:40 a.m.</td><td class="actividad">Verificar relevo o continuidad de sonidista y multimedia.</td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-c" /></div></td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-nc" /></div></td><td><input class="field-input" type="text" placeholder="Responsable" /></td><td><input class="field-input" type="text" placeholder="" /></td></tr>
+      <tr><td class="hora">11:40 a.m.</td><td class="actividad">Reiniciar pantallas o verificar listas de reproducción.</td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-c" /></div></td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-nc" /></div></td><td><input class="field-input" type="text" placeholder="Responsable" /></td><td><input class="field-input" type="text" placeholder="" /></td></tr>
+      <tr><td class="hora">11:45 a.m.</td><td class="actividad">Colocar ambiente musical de transición.</td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-c" /></div></td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-nc" /></div></td><td><input class="field-input" type="text" placeholder="Responsable" /></td><td><input class="field-input" type="text" placeholder="" /></td></tr>
+      <tr><td class="hora">11:45 a.m.</td><td class="actividad">Director de alabanza, músicos y coro del 3er turno presentes.</td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-c" /></div></td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-nc" /></div></td><td><input class="field-input" type="text" placeholder="Responsable" /></td><td><input class="field-input" type="text" placeholder="" /></td></tr>
+      <tr><td class="hora">11:50 a.m.</td><td class="actividad">Revisar parrilla de anuncios o cambios de última hora.</td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-c" /></div></td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-nc" /></div></td><td><input class="field-input" type="text" placeholder="Responsable" /></td><td><input class="field-input" type="text" placeholder="" /></td></tr>
+      <tr><td class="hora">11:50 a.m.</td><td class="actividad">Verificar llegada de los servidores del 3er turno.</td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-c" /></div></td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-nc" /></div></td><td><input class="field-input" type="text" placeholder="Responsable" /></td><td><input class="field-input" type="text" placeholder="" /></td></tr>
+      <tr><td class="hora">11:50 a.m.</td><td class="actividad">Verificar si hay bautizos, presentaciones u otra actividad.</td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-c" /></div></td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-nc" /></div></td><td><input class="field-input" type="text" placeholder="Responsable" /></td><td><input class="field-input" type="text" placeholder="" /></td></tr>
+      <tr><td class="hora">11:50 a.m.</td><td class="actividad">Colocar 5 minutos el video contador-anuncios.</td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-c" /></div></td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-nc" /></div></td><td><input class="field-input" type="text" placeholder="Responsable" /></td><td><input class="field-input" type="text" placeholder="" /></td></tr>
+      <tr><td class="hora">11:55 a.m.</td><td class="actividad">Alabanza del 3er turno lista en el escenario.</td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-c" /></div></td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-nc" /></div></td><td><input class="field-input" type="text" placeholder="Responsable" /></td><td><input class="field-input" type="text" placeholder="" /></td></tr>
+      <tr><td class="hora">11:58 a.m.</td><td class="actividad">Confirmar pastor de guardia de las 12PM y predicador.</td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-c" /></div></td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-nc" /></div></td><td><input class="field-input" type="text" placeholder="Responsable" /></td><td><input class="field-input" type="text" placeholder="" /></td></tr>
+      <tr><td class="hora">11:58 a.m.</td><td class="actividad">Verificar bosquejo del predicador en proyección.</td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-c" /></div></td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-nc" /></div></td><td><input class="field-input" type="text" placeholder="Responsable" /></td><td><input class="field-input" type="text" placeholder="" /></td></tr>
+      <tr><td class="hora">11:58 a.m.</td><td class="actividad">Asegurar llaves de la oficina para conteo de ofrendas finales.</td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-c" /></div></td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-nc" /></div></td><td><input class="field-input" type="text" placeholder="Responsable" /></td><td><input class="field-input" type="text" placeholder="" /></td></tr>
+      <tr><td class="hora">11:58 a.m.</td><td class="actividad">Recopilar hojas de peticiones de oración de este turno.</td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-c" /></div></td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-nc" /></div></td><td><input class="field-input" type="text" placeholder="Responsable" /></td><td><input class="field-input" type="text" placeholder="" /></td></tr>
+      <tr><td class="hora">12:00 p.m.</td><td class="actividad"><strong>Inicio del Servicio</strong></td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-c" /></div></td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-nc" /></div></td><td><input class="field-input" type="text" placeholder="Responsable" /></td><td><input class="field-input" type="text" placeholder="" /></td></tr>
+      <tr><td class="hora">Durante</td><td class="actividad">Monitorear que el programa transcurra según lo planeado.</td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-c" /></div></td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-nc" /></div></td><td><input class="field-input" type="text" placeholder="Responsable" /></td><td><input class="field-input" type="text" placeholder="" /></td></tr>
+      <!-- Bloque Cierre último servicio -->
+      <tr class="block-header"><td colspan="6">🔒 BLOQUE DE CIERRE DEL ÚLTIMO SERVICIO</td></tr>
+      <tr><td class="hora">1:30 p.m.</td><td class="actividad">Recolectar últimas ofrendas, diezmos e ingresos generales.</td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-c" /></div></td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-nc" /></div></td><td><input class="field-input" type="text" placeholder="Responsable" /></td><td><input class="field-input" type="text" placeholder="Entrega formal a Tesorería." /></td></tr>
+      <tr><td class="hora">1:35 p.m.</td><td class="actividad">Realizar conteo físico de asistencia total del tercer servicio.</td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-c" /></div></td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-nc" /></div></td><td><input class="field-input" type="text" placeholder="Responsable" /></td><td><input class="field-input" type="text" placeholder="Registrar en bitácora." /></td></tr>
+      <tr><td class="hora">1:45 p.m.</td><td class="actividad">Apagar ordenadamente pantallas, consolas de sonido y luces.</td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-c" /></div></td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-nc" /></div></td><td><input class="field-input" type="text" placeholder="Equipo técnico" /></td><td><input class="field-input" type="text" placeholder="" /></td></tr>
+      <tr><td class="hora">1:50 p.m.</td><td class="actividad">Apagar todas las unidades de aire acondicionado.</td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-c" /></div></td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-nc" /></div></td><td><input class="field-input" type="text" placeholder="Responsable" /></td><td><input class="field-input" type="text" placeholder="Evitar consumos eléctricos." /></td></tr>
+      <tr><td class="hora">2:00 p.m.</td><td class="actividad">Inspección final de orden y cierre total de las puertas con llave.</td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-c" /></div></td><td class="center"><div class="check-wrap"><input type="checkbox" class="check-nc" /></div></td><td><input class="field-input" type="text" placeholder="Coordinador general" /></td><td><input class="field-input" type="text" placeholder="" /></td></tr>
+    </tbody>
+  </table>
+
+  <div class="actions">
+    <button class="btn btn-primary" onclick="marcarTodos('tbl3', true)">✅ Marcar todos C</button>
+    <button class="btn btn-outline" onclick="imprimirTab('tab3')">🖨️ Imprimir esta pestaña</button>
+    <button class="btn btn-danger" onclick="limpiarTab('tbl3')">🗑️ Limpiar</button>
+  </div>
+</div>
+
+<script>
+  // ── Tab switching ──
+  function openTab(evt, tabId) {
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById(tabId).classList.add('active');
+    evt.currentTarget.classList.add('active');
+  }
+
+  // ── Mutual exclusion C / NC + row highlight + progress ──
+  function bindTable(tblId, barId, pctId) {
+    const tbl = document.getElementById(tblId);
+
+    tbl.querySelectorAll('tbody tr:not(.block-header)').forEach(row => {
+      const checkC = row.querySelector('.check-c');
+      const checkNC = row.querySelector('.check-nc');
+      if (!checkC || !checkNC) return;
+
+      checkC.addEventListener('change', () => {
+        if (checkC.checked) { checkNC.checked = false; row.classList.add('done'); row.classList.remove('no-done'); }
+        else { row.classList.remove('done'); }
+        updateProgress(tblId, barId, pctId);
+      });
+
+      checkNC.addEventListener('change', () => {
+        if (checkNC.checked) { checkC.checked = false; row.classList.add('no-done'); row.classList.remove('done'); }
+        else { row.classList.remove('no-done'); }
+        updateProgress(tblId, barId, pctId);
+      });
+    });
+
+    updateProgress(tblId, barId, pctId);
+  }
+
+  function updateProgress(tblId, barId, pctId) {
+    const tbl = document.getElementById(tblId);
+    const rows = [...tbl.querySelectorAll('tbody tr:not(.block-header)')].filter(r => r.querySelector('.check-c'));
+    const total = rows.length;
+    const done = rows.filter(r => r.querySelector('.check-c').checked || r.querySelector('.check-nc').checked).length;
+    const pct = total ? Math.round((done / total) * 100) : 0;
+    document.getElementById(barId).style.width = pct + '%';
+    document.getElementById(pctId).textContent = done + ' / ' + total + ' completadas (' + pct + '%)';
+  }
+
+  // ── Mark all C ──
+  function marcarTodos(tblId, checked) {
+    const tbl = document.getElementById(tblId);
+    const idx = tblId.replace('tbl', '');
+    tbl.querySelectorAll('tbody tr:not(.block-header)').forEach(row => {
+      const checkC = row.querySelector('.check-c');
+      const checkNC = row.querySelector('.check-nc');
+      if (!checkC) return;
+      checkC.checked = checked;
+      checkNC.checked = false;
+      row.classList.toggle('done', checked);
+      row.classList.remove('no-done');
+    });
+    updateProgress(tblId, 'bar' + idx, 'pct' + idx);
+  }
+
+  // ── Clear ──
+  function limpiarTab(tblId) {
+    if (!confirm('¿Limpiar todos los campos de esta pestaña?')) return;
+    const tbl = document.getElementById(tblId);
+    const idx = tblId.replace('tbl', '');
+    tbl.querySelectorAll('input[type=checkbox]').forEach(cb => cb.checked = false);
+    tbl.querySelectorAll('input[type=text]').forEach(inp => {
+      if (!inp.defaultValue) inp.value = '';
+    });
+    tbl.querySelectorAll('tbody tr').forEach(r => { r.classList.remove('done', 'no-done'); });
+    updateProgress(tblId, 'bar' + idx, 'pct' + idx);
+  }
+
+  // ── Print single tab ──
+  function imprimirTab(tabId) {
+    document.querySelectorAll('.tab-panel').forEach(p => p.style.display = 'none');
+    document.getElementById(tabId).style.display = 'block';
+    window.print();
+    // Restore
+    document.querySelectorAll('.tab-panel').forEach(p => p.style.display = '');
+    document.getElementById(tabId).style.display = '';
+    // Re-apply active state
+    document.querySelectorAll('.tab-panel.active').forEach(p => p.style.display = 'block');
+  }
+
+  // ── Set today's date ──
+  const today = new Date().toISOString().split('T')[0];
+  document.getElementById('fecha-global').value = today;
+
+  // ── Init all tables ──
+  bindTable('tbl1', 'bar1', 'pct1');
+  bindTable('tbl2', 'bar2', 'pct2');
+  bindTable('tbl3', 'bar3', 'pct3');
+</script>
+
+</div><!-- /.content-wrap -->
+</body>
+</html>
